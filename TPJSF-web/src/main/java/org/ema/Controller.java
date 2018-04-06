@@ -68,9 +68,8 @@ public class Controller implements Serializable{
 		
 	}
 	
-	public void supprimer(Pizza pizza){
+	public void supprimer(){
 		
-		selectedPizza.setPizza(pizza);
 		this.ArrayPizza.remove(selectedPizza);
 		
 	}
