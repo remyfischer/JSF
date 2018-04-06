@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	>
+<h:head>
+	<f:facet name="first">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<title>Pizza Hello</title>
+	</f:facet>
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{controller.initialiser}" />
+	</f:metadata>
+	
+</h:head>
+<h:body>
+	<h2>JSF 2.0 commande de pizza</h2>
+	<h:form>
+		<p:inputText value="#{controller.name}" />
+		<p:commandButton value="commande" action="#{controller.commande()}"
+			ajax="false"/>
+	</h:form>
+
+	<h:form  >
+		
+		<p:dataTable  var="pizza" value="#{controller.arrayPizza}">
+			
+			<p:column headerText="Id">
+				<h:outputText value="#{pizza.id}" />
+			</p:column>
+			<p:column headerText="Name">
+				<h:outputText value="#{pizza.nom}" />
+			</p:column>
+			<p:column headerText="Prize">
+				<h:outputText value="#{pizza.prix}" />
+			</p:column>
+			<p:column >
+				<p:commandButton  icon="ui-icon-search" title="View" ajax="false" type="submit" 
+					action="#{controller.modifier(pizza)}">
+				</p:commandButton>
+				<p:commandButton icon="ui-icon-trash" title="Delete"
+					action="#{controller.supprimer()}" ajax="false">
+				</p:commandButton>
+
+			</p:column>
+		</p:dataTable>
+	</h:form>
+</h:body>
+</html>
