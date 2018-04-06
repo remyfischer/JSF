@@ -1,17 +1,21 @@
 package org.ema;
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.jboss.logging.Logger;
 
 @Named
-@RequestScoped
-public class Controller {
+@SessionScoped
+public class Controller implements Serializable{
 	private static Logger LOGGER = Logger.getLogger(Controller.class);
 	private String name;
 	private double prix;
-	private ArrayList<Pizza> ArrayPizza;
+	private ArrayList<Pizza> ArrayPizza = new ArrayList();
 	
 
 	public String commande() {
@@ -19,6 +23,10 @@ public class Controller {
 		return null;
 	}
 	
+	@Inject
+	private SelectedPizza selectedPizza;
+	
+	@PostConstruct
 	public void initPizza(){
 		
 		this.ArrayPizza.add(new Pizza(1, "Reine", 7.10));
@@ -28,15 +36,42 @@ public class Controller {
 		
 	}
 	
-	public void modifier(Pizza pizza){
+	public String modifier(Pizza pizza) {
+		
+		selectedPizza.setPizza(pizza);
+		return "modifpizza";
+		
+	}
+	
+	public void ajoutPizza(){
+		
+		this.ArrayPizza.add(new Pizza(0, name, prix));
+		
+	}
+	
+	public String cancel(){
+		
+		return "pizzeria";
+		
+	}
+	
+	public String edit(){
+		selectedPizza.getPizza().setNom(name);
+		selectedPizza.getPizza().setPrix(prix);
+		return "pizzeria";
 		
 	}
 	
 	public void initialiser(){
 		
+		
+		
 	}
 	
-	public void supprimer(){
+	public void supprimer(Pizza pizza){
+		
+		selectedPizza.setPizza(pizza);
+		this.ArrayPizza.remove(selectedPizza);
 		
 	}
 	
